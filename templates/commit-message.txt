@@ -1,0 +1,12 @@
+---
+description: Write a conventional commit message for a staged diff
+variables:
+  - name: Diff
+    required: true
+defaultModel: haiku
+---
+Write a conventional commit message (type: scope: subject, then optional body) for this staged diff:
+
+{{.Diff}}
+
+Reply with ONLY the commit message. No explanation, no code fences.

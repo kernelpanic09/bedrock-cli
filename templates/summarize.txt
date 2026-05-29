@@ -1,0 +1,12 @@
+---
+description: Summarize long text
+variables:
+  - name: Text
+    required: true
+  - name: Length
+    default: 3 sentences
+defaultModel: haiku
+---
+Summarize the following in {{.Length}}:
+
+{{.Text}}

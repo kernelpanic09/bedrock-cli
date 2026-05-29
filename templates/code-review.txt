@@ -1,0 +1,14 @@
+---
+description: Review a code diff for issues
+variables:
+  - name: Diff
+    required: true
+  - name: Focus
+    default: security and bugs
+defaultModel: sonnet
+---
+Review this code change with a focus on {{.Focus}}:
+
+{{.Diff}}
+
+Be specific. Cite line numbers where you can. Suggest concrete fixes.

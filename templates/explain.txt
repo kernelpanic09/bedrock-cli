@@ -1,0 +1,8 @@
+---
+description: Explain a concept like a senior engineer
+variables:
+  - name: Topic
+    required: true
+defaultModel: sonnet
+---
+Explain {{.Topic}} at the level a senior engineer would understand. Skip the marketing speak. Include the actual mechanics, the tradeoffs, and the common ways people get it wrong.

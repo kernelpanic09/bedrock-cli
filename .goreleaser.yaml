@@ -1,0 +1,93 @@
+version: 2
+
+before:
+  hooks:
+    - go mod tidy
+    - go vet ./...
+
+builds:
+  - id: bedrock-cli
+    main: ./cmd/bedrock-cli
+    binary: bedrock-cli
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ignore:
+      - goos: windows
+        goarch: arm64
+    ldflags:
+      - -s -w -X github.com/kernelpanic09/bedrock-cli/internal/cmd.Version={{.Version}}
+    flags:
+      - -trimpath
+
+archives:
+  - id: bedrock-cli
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "arm64" }}arm64
+      {{- else }}{{ .Arch }}{{ end }}
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - README.md
+      - LICENSE
+      - templates/*
+
+checksum:
+  name_template: checksums.txt
+  algorithm: sha256
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  sort: asc
+  use: github
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore:"
+      - "Merge pull request"
+  groups:
+    - title: Features
+      regexp: "^feat"
+      order: 0
+    - title: Bug fixes
+      regexp: "^fix"
+      order: 1
+    - title: Other
+      order: 999
+
+brews:
+  - name: bedrock-cli
+    homepage: https://github.com/kernelpanic09/bedrock-cli
+    description: A friendlier CLI for AWS Bedrock - send prompts, compare models, manage templates, track costs
+    license: MIT
+    repository:
+      owner: kernelpanic09
+      name: homebrew-tap
+    commit_author:
+      name: kernelpanic09
+      email: kernelpanic09@users.noreply.github.com
+    install: |
+      bin.install "bedrock-cli"
+    test: |
+      system "#{bin}/bedrock-cli version"
+
+release:
+  github:
+    owner: kernelpanic09
+    name: bedrock-cli
+  draft: false
+  prerelease: auto
+  make_latest: true
