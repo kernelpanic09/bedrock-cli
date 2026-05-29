@@ -1,8 +1,11 @@
 # bedrock-cli
 
-Send prompts to Bedrock without writing JSON. Compare models. Track costs. Manage templates. All from your terminal.
+[![License: MIT](https://img.shields.io/github/license/kernelpanic09/bedrock-cli)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/kernelpanic09/bedrock-cli?include_prereleases&sort=semver)](https://github.com/kernelpanic09/bedrock-cli/releases)
+[![Last commit](https://img.shields.io/github/last-commit/kernelpanic09/bedrock-cli)](https://github.com/kernelpanic09/bedrock-cli/commits)
+[![Go](https://img.shields.io/badge/go-1.22-blue)](go.mod)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+Send prompts to Bedrock without writing JSON. Compare models. Track costs. Manage templates. All from your terminal.
 [![Go version](https://img.shields.io/badge/go-1.22+-00ADD8?logo=go)](go.mod)
 [![Release](https://img.shields.io/github/v/release/kernelpanic09/bedrock-cli)](https://github.com/kernelpanic09/bedrock-cli/releases)
 
