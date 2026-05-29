@@ -203,6 +203,7 @@ type KnowledgeBase struct {
 	Name        string
 	Description string
 	Status      string
+	VectorStore string
 }
 
 // KBResult is a single result chunk from a knowledge base query.

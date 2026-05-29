@@ -11,4 +11,6 @@ var costCmd = &cobra.Command{
 func init() {
 	costCmd.AddCommand(costSummaryCmd)
 	costCmd.AddCommand(costByModelCmd)
+	costCmd.AddCommand(costByProjectCmd)
+	costCmd.AddCommand(costByAccountCmd)
 }

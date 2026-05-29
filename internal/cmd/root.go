@@ -72,6 +72,9 @@ func init() {
 	rootCmd.AddCommand(modelsCmd)
 	rootCmd.AddCommand(costCmd)
 	rootCmd.AddCommand(kbCmd)
+	rootCmd.AddCommand(agentsCmd)
+	rootCmd.AddCommand(guardrailsCmd)
+	rootCmd.AddCommand(profileCmd)
 	rootCmd.AddCommand(configCmd)
 	rootCmd.AddCommand(versionCmd)
 }
@@ -110,6 +113,11 @@ func resolveRegion() string {
 		r = config.DefaultRegion
 	}
 	return r
+}
+
+// resolveProfile returns the active AWS profile (empty string means default chain).
+func resolveProfile() string {
+	return viper.GetString("aws-profile")
 }
 
 // maybeRunFirstTime checks whether this is the first time the user has run

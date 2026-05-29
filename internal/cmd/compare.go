@@ -16,7 +16,10 @@ import (
 	"github.com/kernelpanic09/bedrock-cli/internal/models"
 )
 
-var flagCompareModels string
+var (
+	flagCompareModels  string
+	flagCompareProject string
+)
 
 var compareCmd = &cobra.Command{
 	Use:   "compare <prompt>",
@@ -33,6 +36,7 @@ Examples:
 
 func init() {
 	compareCmd.Flags().StringVar(&flagCompareModels, "models", "haiku,sonnet", "comma-separated list of model aliases or IDs")
+	compareCmd.Flags().StringVar(&flagCompareProject, "project", "", "project tag for cost attribution")
 }
 
 type compareResult struct {
@@ -107,6 +111,32 @@ func runCompare(cmd *cobra.Command, args []string) error {
 	}
 
 	wg.Wait()
+
+	// Record each model result in the cost tracker.
+	if tracker, err := cost.Open(); err == nil {
+		profile := resolveProfile()
+		accountID := ""
+		if id, idErr := resolveCallerIdentity(ctx, region); idErr == nil {
+			accountID = id.AccountID
+		}
+		for _, r := range results {
+			if r.err != nil {
+				continue
+			}
+			_ = tracker.Record(&cost.Invocation{
+				Timestamp:    time.Now(),
+				Model:        r.modelID,
+				InputTokens:  r.inputTokens,
+				OutputTokens: r.outputTokens,
+				CostUSD:      r.costUSD,
+				DurationMs:   r.durationMs,
+				Project:      flagCompareProject,
+				AWSProfile:   profile,
+				AWSAccountID: accountID,
+			})
+		}
+		tracker.Close()
+	}
 
 	if flagJSON {
 		return printCompareJSON(results)

@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 
 	"github.com/spf13/cobra"
@@ -11,35 +12,60 @@ import (
 
 var kbListCmd = &cobra.Command{
 	Use:   "list",
-	Short: "List available knowledge bases",
-	Long: `List Bedrock Knowledge Bases in your account and region.
+	Short: "List Knowledge Bases in the account",
+	Long: `List Bedrock Knowledge Bases, showing ID, name, status, and vector store type.
 
-Note: listing knowledge bases requires the bedrock-agent control plane.
-If this command fails, use the AWS CLI directly:
-  aws bedrock-agent list-knowledge-bases --region <region>`,
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx := context.Background()
-		cl, err := client.New(ctx, resolveRegion())
-		if err != nil {
-			return fmt.Errorf("creating Bedrock client: %w", err)
-		}
+Examples:
+  bedrock-cli kb list
+  bedrock-cli kb list --json`,
+	RunE: runKBList,
+}
 
-		kbs, err := cl.ListKnowledgeBases(ctx)
-		if err != nil {
-			return err
-		}
+func runKBList(cmd *cobra.Command, args []string) error {
+	ctx := context.Background()
+	cl, err := client.NewAgentClient(ctx, resolveRegion())
+	if err != nil {
+		return fmt.Errorf("creating agent client: %w", err)
+	}
 
-		if len(kbs) == 0 {
-			out.Dim("No knowledge bases found in region " + resolveRegion())
-			return nil
-		}
+	kbs, err := cl.ListKnowledgeBases(ctx)
+	if err != nil {
+		return err
+	}
 
-		headers := []string{"ID", "Name", "Status", "Description"}
-		var rows [][]string
-		for _, kb := range kbs {
-			rows = append(rows, []string{kb.ID, kb.Name, kb.Status, kb.Description})
-		}
-		out.Table(headers, rows)
+	if len(kbs) == 0 {
+		out.Dim("No knowledge bases found in region " + resolveRegion())
 		return nil
-	},
+	}
+
+	if flagJSON {
+		type row struct {
+			ID          string `json:"id"`
+			Name        string `json:"name"`
+			Status      string `json:"status"`
+			VectorStore string `json:"vector_store,omitempty"`
+			Description string `json:"description,omitempty"`
+		}
+		var rows []row
+		for _, kb := range kbs {
+			rows = append(rows, row{
+				ID:          kb.ID,
+				Name:        kb.Name,
+				Status:      kb.Status,
+				VectorStore: kb.VectorStore,
+				Description: kb.Description,
+			})
+		}
+		enc := json.NewEncoder(out.Writer())
+		enc.SetIndent("", "  ")
+		return enc.Encode(rows)
+	}
+
+	headers := []string{"ID", "Name", "Status", "Vector Store"}
+	var rows [][]string
+	for _, kb := range kbs {
+		rows = append(rows, []string{kb.ID, kb.Name, kb.Status, kb.VectorStore})
+	}
+	out.Table(headers, rows)
+	return nil
 }

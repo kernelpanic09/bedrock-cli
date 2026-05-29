@@ -17,11 +17,12 @@ import (
 )
 
 var (
-	flagNoCache  bool
-	flagNoStream bool
-	flagMaxTokens int
+	flagNoCache     bool
+	flagNoStream    bool
+	flagMaxTokens   int
 	flagTemperature float64
-	flagSystem   string
+	flagSystem      string
+	flagProject     string
 )
 
 var promptCmd = &cobra.Command{
@@ -46,6 +47,7 @@ func init() {
 	promptCmd.Flags().IntVar(&flagMaxTokens, "max-tokens", 0, "maximum tokens in response (0 = use config default)")
 	promptCmd.Flags().Float64Var(&flagTemperature, "temperature", -1, "sampling temperature 0-1 (-1 = use config default)")
 	promptCmd.Flags().StringVar(&flagSystem, "system", "", "system prompt to prepend")
+	promptCmd.Flags().StringVar(&flagProject, "project", "", "project tag for cost attribution")
 }
 
 func runPrompt(cmd *cobra.Command, args []string) error {
@@ -169,18 +171,24 @@ func runPrompt(cmd *cobra.Command, args []string) error {
 		}
 	}
 
-	// Record in cost tracker.
+	// Record in cost tracker, capturing identity for account-level attribution.
 	tracker, err := cost.Open()
 	if err == nil {
 		defer tracker.Close()
-		_ = tracker.Record(&cost.Invocation{
+		inv := &cost.Invocation{
 			Timestamp:    time.Now(),
 			Model:        model.ID,
 			InputTokens:  result.InputTokens,
 			OutputTokens: result.OutputTokens,
 			CostUSD:      costUSD,
 			DurationMs:   durationMs,
-		})
+			Project:      flagProject,
+			AWSProfile:   viper.GetString("aws-profile"),
+		}
+		if id, idErr := resolveCallerIdentity(ctx, region); idErr == nil {
+			inv.AWSAccountID = id.AccountID
+		}
+		_ = tracker.Record(inv)
 	}
 
 	return nil

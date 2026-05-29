@@ -15,7 +15,7 @@ var flagKBMaxResults int
 
 var kbQueryCmd = &cobra.Command{
 	Use:   "query <kb-id> <query>",
-	Short: "Query a knowledge base",
+	Short: "Query a Knowledge Base",
 	Long: `Send a natural-language query to a Bedrock Knowledge Base and return
 the top matching document chunks.
 
@@ -35,12 +35,12 @@ func runKBQuery(cmd *cobra.Command, args []string) error {
 	query := args[1]
 
 	ctx := context.Background()
-	cl, err := client.New(ctx, resolveRegion())
+	cl, err := client.NewAgentClient(ctx, resolveRegion())
 	if err != nil {
-		return fmt.Errorf("creating Bedrock client: %w", err)
+		return fmt.Errorf("creating agent client: %w", err)
 	}
 
-	results, err := cl.QueryKnowledgeBase(ctx, kbID, query, flagKBMaxResults)
+	results, err := cl.QueryKB(ctx, kbID, query, flagKBMaxResults)
 	if err != nil {
 		return err
 	}
