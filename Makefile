@@ -8,11 +8,11 @@ BUILD_DIR  := dist
 
 ## build: compile the binary for the current platform
 build:
-	go build $(LDFLAGS) -o $(BUILD_DIR)/$(BINARY) ./cmd/$(BINARY)
+	go build $(LDFLAGS) -o $(BUILD_DIR)/$(BINARY) ./cmd
 
 ## install: install the binary to $GOPATH/bin
 install:
-	go install $(LDFLAGS) ./cmd/$(BINARY)
+	go install $(LDFLAGS) ./cmd
 
 ## test: run all unit tests
 test:
