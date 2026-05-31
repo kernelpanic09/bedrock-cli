@@ -7,7 +7,7 @@ before:
 
 builds:
   - id: bedrock-cli
-    main: ./cmd/bedrock-cli
+    main: ./cmd
     binary: bedrock-cli
     env:
       - CGO_ENABLED=0
@@ -36,7 +36,7 @@ archives:
       {{- else }}{{ .Arch }}{{ end }}
     format_overrides:
       - goos: windows
-        format: zip
+        formats: [zip]
     files:
       - README.md
       - LICENSE
