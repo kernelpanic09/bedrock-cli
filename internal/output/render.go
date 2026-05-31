@@ -28,8 +28,8 @@ var (
 
 // Writer wraps an io.Writer with TTY-aware formatting helpers.
 type Writer struct {
-	w      io.Writer
-	isTTY  bool
+	w       io.Writer
+	isTTY   bool
 	noColor bool
 }
 

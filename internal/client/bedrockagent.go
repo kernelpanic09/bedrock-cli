@@ -22,8 +22,8 @@ import (
 
 // AgentClient wraps the Bedrock control-plane, bedrockagent, agentruntime, bedrockruntime, and S3 clients.
 type AgentClient struct {
-	control      *bedrock.Client       // bedrock control plane (guardrails, models)
-	agent        *bedrockagent.Client  // bedrockagent control plane (KBs, agents)
+	control      *bedrock.Client      // bedrock control plane (guardrails, models)
+	agent        *bedrockagent.Client // bedrockagent control plane (KBs, agents)
 	agentRuntime *bedrockagentruntime.Client
 	brt          *bedrockruntime.Client
 	s3           *s3.Client
@@ -788,4 +788,3 @@ func sanitizeName(name string) string {
 		return '-'
 	}, result)
 }
-

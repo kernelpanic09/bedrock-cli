@@ -14,12 +14,12 @@ import (
 
 // Entry is what we persist to disk for a cached response.
 type Entry struct {
-	Model      string    `json:"model"`
-	Prompt     string    `json:"prompt"`
-	Response   string    `json:"response"`
-	InputTokens  int     `json:"input_tokens"`
-	OutputTokens int     `json:"output_tokens"`
-	CachedAt   time.Time `json:"cached_at"`
+	Model        string    `json:"model"`
+	Prompt       string    `json:"prompt"`
+	Response     string    `json:"response"`
+	InputTokens  int       `json:"input_tokens"`
+	OutputTokens int       `json:"output_tokens"`
+	CachedAt     time.Time `json:"cached_at"`
 }
 
 // Key computes the SHA256 cache key for a given combination of inputs.

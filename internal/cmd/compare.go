@@ -40,14 +40,14 @@ func init() {
 }
 
 type compareResult struct {
-	modelAlias string
-	modelID    string
-	response   string
+	modelAlias   string
+	modelID      string
+	response     string
 	inputTokens  int
 	outputTokens int
-	costUSD    float64
-	durationMs int64
-	err        error
+	costUSD      float64
+	durationMs   int64
+	err          error
 }
 
 func runCompare(cmd *cobra.Command, args []string) error {
@@ -164,13 +164,13 @@ func runCompare(cmd *cobra.Command, args []string) error {
 
 func printCompareJSON(results []compareResult) error {
 	type row struct {
-		Model        string `json:"model"`
-		Response     string `json:"response"`
-		InputTokens  int    `json:"input_tokens"`
-		OutputTokens int    `json:"output_tokens"`
+		Model        string  `json:"model"`
+		Response     string  `json:"response"`
+		InputTokens  int     `json:"input_tokens"`
+		OutputTokens int     `json:"output_tokens"`
 		CostUSD      float64 `json:"cost_usd"`
-		DurationMs   int64  `json:"duration_ms"`
-		Error        string `json:"error,omitempty"`
+		DurationMs   int64   `json:"duration_ms"`
+		Error        string  `json:"error,omitempty"`
 	}
 	var rows []row
 	for _, r := range results {

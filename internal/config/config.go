@@ -15,15 +15,15 @@ const (
 
 // Config holds all user-facing configuration values.
 type Config struct {
-	DefaultModel string `mapstructure:"default-model"`
-	Region       string `mapstructure:"region"`
-	MaxTokens    int    `mapstructure:"max-tokens"`
+	DefaultModel string  `mapstructure:"default-model"`
+	Region       string  `mapstructure:"region"`
+	MaxTokens    int     `mapstructure:"max-tokens"`
 	Temperature  float64 `mapstructure:"temperature"`
 	// CacheTTL of 0 means cache forever; -1 disables caching entirely.
-	CacheTTL    int    `mapstructure:"cache-ttl"`
-	NoColor     bool   `mapstructure:"no-color"`
-	NoStream    bool   `mapstructure:"no-stream"`
-	ShowCost    bool   `mapstructure:"show-cost"`
+	CacheTTL int  `mapstructure:"cache-ttl"`
+	NoColor  bool `mapstructure:"no-color"`
+	NoStream bool `mapstructure:"no-stream"`
+	ShowCost bool `mapstructure:"show-cost"`
 }
 
 // Dir returns the config directory, creating it if needed.

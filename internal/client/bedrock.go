@@ -136,8 +136,8 @@ func (c *Client) ListFoundationModels(ctx context.Context) ([]FoundationModel, e
 	var models []FoundationModel
 	for _, m := range resp.ModelSummaries {
 		fm := FoundationModel{
-			ModelID:     aws.ToString(m.ModelId),
-			ModelName:   aws.ToString(m.ModelName),
+			ModelID:      aws.ToString(m.ModelId),
+			ModelName:    aws.ToString(m.ModelName),
 			ProviderName: aws.ToString(m.ProviderName),
 		}
 		models = append(models, fm)
@@ -250,8 +250,8 @@ func buildRequestBody(modelID, prompt string, temperature float64, maxTokens int
 		}
 	case strings.HasPrefix(modelID, "cohere"):
 		payload = map[string]any{
-			"prompt":     prompt,
-			"max_tokens": maxTokens,
+			"prompt":      prompt,
+			"max_tokens":  maxTokens,
 			"temperature": temperature,
 		}
 	default:
@@ -316,9 +316,9 @@ func parseResponse(modelID string, body []byte) (*InvokeResult, error) {
 
 	case strings.HasPrefix(modelID, "meta.llama"):
 		var resp struct {
-			Generation          string `json:"generation"`
-			PromptTokenCount    int    `json:"prompt_token_count"`
-			GenerationTokenCount int   `json:"generation_token_count"`
+			Generation           string `json:"generation"`
+			PromptTokenCount     int    `json:"prompt_token_count"`
+			GenerationTokenCount int    `json:"generation_token_count"`
 		}
 		if err := json.Unmarshal(body, &resp); err != nil {
 			return nil, fmt.Errorf("parsing Llama response: %w", err)

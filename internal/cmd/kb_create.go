@@ -11,10 +11,10 @@ import (
 )
 
 var (
-	flagKBBucket         string
-	flagKBEmbedding      string
-	flagKBRoleARN        string
-	flagKBCollectionARN  string
+	flagKBBucket        string
+	flagKBEmbedding     string
+	flagKBRoleARN       string
+	flagKBCollectionARN string
 )
 
 var kbCreateCmd = &cobra.Command{
