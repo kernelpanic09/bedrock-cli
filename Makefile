@@ -8,11 +8,11 @@ BUILD_DIR  := dist
 
 ## build: compile the binary for the current platform
 build:
-	go build $(LDFLAGS) -o $(BUILD_DIR)/$(BINARY) ./cmd
+	go build $(LDFLAGS) -o $(BUILD_DIR)/$(BINARY) ./cmd/bedrock-cli
 
 ## install: install the binary to $GOPATH/bin
 install:
-	go install $(LDFLAGS) ./cmd
+	go install $(LDFLAGS) ./cmd/bedrock-cli
 
 ## test: run all unit tests
 test:

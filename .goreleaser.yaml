@@ -7,7 +7,7 @@ before:
 
 builds:
   - id: bedrock-cli
-    main: ./cmd
+    main: ./cmd/bedrock-cli
     binary: bedrock-cli
     env:
       - CGO_ENABLED=0

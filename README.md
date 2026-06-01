@@ -28,19 +28,13 @@ bedrock-cli "What is HCL?"
 
 ## Install
 
-**Homebrew** (tap coming after first release):
+**Download a binary** from the [releases page](https://github.com/kernelpanic09/bedrock-cli/releases) — prebuilt for Linux, macOS, and Windows (amd64 and arm64). Unpack the archive and put `bedrock-cli` on your `PATH`.
 
-```sh
-brew install kernelpanic09/tap/bedrock-cli
-```
-
-**go install** (Go 1.22+ required):
+**go install** (Go 1.24+ required):
 
 ```sh
 go install github.com/kernelpanic09/bedrock-cli/cmd/bedrock-cli@latest
 ```
-
-**Download a binary** from the [releases page](https://github.com/kernelpanic09/bedrock-cli/releases) for Linux, macOS, or Windows.
 
 ---
 
