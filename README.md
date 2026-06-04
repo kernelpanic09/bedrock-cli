@@ -28,7 +28,7 @@ bedrock-cli "What is HCL?"
 
 ## Install
 
-**Download a binary** from the [releases page](https://github.com/kernelpanic09/bedrock-cli/releases) — prebuilt for Linux, macOS, and Windows (amd64 and arm64). Unpack the archive and put `bedrock-cli` on your `PATH`.
+**Download a binary** from the [releases page](https://github.com/kernelpanic09/bedrock-cli/releases) - prebuilt for Linux, macOS, and Windows (amd64 and arm64). Unpack the archive and put `bedrock-cli` on your `PATH`.
 
 **go install** (Go 1.24+ required):
 
