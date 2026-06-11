@@ -315,6 +315,7 @@ See [docs/configuration.md](docs/configuration.md) for the full reference includ
 - [mcp-server-aws](https://github.com/kernelpanic09/mcp-server-aws) - MCP server for AWS service access
 - [terraform-aws-modules](https://github.com/kernelpanic09/terraform-aws-modules) - Terraform modules for common AWS patterns
 - [k8s-ai-operator](https://github.com/kernelpanic09/k8s-ai-operator) - Kubernetes operator that integrates Bedrock models into cluster workflows
+- [github-actions-platform](https://github.com/kernelpanic09/github-actions-platform) - reusable CI/CD workflows for Go build, test, and release automation
 
 ---
 
