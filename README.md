@@ -49,7 +49,7 @@ bedrock-cli config set default-model sonnet
 bedrock-cli "Explain the difference between OIDC and SAML"
 ```
 
-You need AWS credentials in the standard places (`~/.aws/credentials`, env vars, IAM role). The IAM principal needs `bedrock:InvokeModel` and `bedrock:ConverseStream`. See [docs/configuration.md](docs/configuration.md) for the exact policy.
+You need AWS credentials in the standard places (`~/.aws/credentials`, env vars, IAM role). The IAM principal needs the Bedrock runtime actions `bedrock:InvokeModel`, `bedrock:InvokeModelWithResponseStream`, and `bedrock:ConverseStream` (Knowledge Bases, Agents, and Guardrails need more). See [docs/configuration.md](docs/configuration.md) for the exact policy.
 
 ---
 
