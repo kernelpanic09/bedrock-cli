@@ -19,7 +19,7 @@ type Model struct {
 }
 
 // catalog is the known set of Bedrock models with their aliases and pricing.
-// Pricing as of 2024-Q4; always verify against the AWS Bedrock pricing page.
+// Pricing as of 2025-Q4; always verify against the AWS Bedrock pricing page.
 var catalog = []Model{
 	{
 		ID:                "anthropic.claude-haiku-4-5-20251001-v1:0",
