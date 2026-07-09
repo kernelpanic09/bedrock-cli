@@ -173,7 +173,7 @@ type AccountSummary struct {
 	TotalCost    float64
 }
 
-// Summary returns aggregated stats over a time window.
+// Summary returns individual invocation records ordered by timestamp descending.
 // If since is the zero value, all records are included.
 func (t *Tracker) Summary(since time.Time) ([]Invocation, error) {
 	query := `SELECT id, timestamp, model, input_tokens, output_tokens, cost_usd, cached, template_name, duration_ms, aws_account_id, aws_profile, project
