@@ -176,6 +176,83 @@ func newInMemoryTracker(t *testing.T) *Tracker {
 	return tracker
 }
 
+func TestByProject(t *testing.T) {
+	tracker := newInMemoryTracker(t)
+
+	now := time.Now().UTC()
+	records := []Invocation{
+		{Timestamp: now, Model: "haiku", Project: "alpha", CostUSD: 0.001},
+		{Timestamp: now, Model: "haiku", Project: "alpha", CostUSD: 0.002},
+		{Timestamp: now, Model: "sonnet", Project: "beta", CostUSD: 0.010},
+		{Timestamp: now, Model: "haiku", Project: "", CostUSD: 0.003},
+	}
+	for i := range records {
+		if err := tracker.Record(&records[i]); err != nil {
+			t.Fatalf("Record() error: %v", err)
+		}
+	}
+
+	summaries, err := tracker.ByProject(time.Time{})
+	if err != nil {
+		t.Fatalf("ByProject() error: %v", err)
+	}
+	if len(summaries) != 3 {
+		t.Errorf("ByProject() returned %d rows, want 3", len(summaries))
+	}
+
+	for _, s := range summaries {
+		if s.Project == "alpha" {
+			if s.Calls != 2 {
+				t.Errorf("alpha calls = %d, want 2", s.Calls)
+			}
+			if abs(s.TotalCost-0.003) > 1e-9 {
+				t.Errorf("alpha TotalCost = %.6f, want 0.003", s.TotalCost)
+			}
+		}
+	}
+}
+
+func TestByAccount(t *testing.T) {
+	tracker := newInMemoryTracker(t)
+
+	now := time.Now().UTC()
+	records := []Invocation{
+		{Timestamp: now, Model: "haiku", AWSAccountID: "111111111111", CostUSD: 0.001},
+		{Timestamp: now, Model: "sonnet", AWSAccountID: "111111111111", CostUSD: 0.005},
+		{Timestamp: now, Model: "haiku", AWSAccountID: "222222222222", CostUSD: 0.002},
+		{Timestamp: now, Model: "haiku", AWSAccountID: "", CostUSD: 0.001},
+	}
+	for i := range records {
+		if err := tracker.Record(&records[i]); err != nil {
+			t.Fatalf("Record() error: %v", err)
+		}
+	}
+
+	summaries, err := tracker.ByAccount(time.Time{})
+	if err != nil {
+		t.Fatalf("ByAccount() error: %v", err)
+	}
+	if len(summaries) != 3 {
+		t.Errorf("ByAccount() returned %d rows, want 3", len(summaries))
+	}
+
+	for _, s := range summaries {
+		if s.AccountID == "111111111111" {
+			if s.Calls != 2 {
+				t.Errorf("account 111... calls = %d, want 2", s.Calls)
+			}
+			if abs(s.TotalCost-0.006) > 1e-9 {
+				t.Errorf("account 111... TotalCost = %.6f, want 0.006", s.TotalCost)
+			}
+		}
+		if s.AccountID == "unknown" {
+			if s.Calls != 1 {
+				t.Errorf("unknown account calls = %d, want 1", s.Calls)
+			}
+		}
+	}
+}
+
 func abs(x float64) float64 {
 	if x < 0 {
 		return -x
