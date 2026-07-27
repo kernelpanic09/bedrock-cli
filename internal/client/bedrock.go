@@ -368,5 +368,6 @@ func parseResponse(modelID string, body []byte) (*InvokeResult, error) {
 }
 
 func isAnthropicModel(modelID string) bool {
-	return strings.HasPrefix(modelID, "anthropic.")
+	// Also matches cross-region inference profile IDs, e.g. "us.anthropic.claude-...".
+	return strings.HasPrefix(modelID, "anthropic.") || strings.Contains(modelID, ".anthropic.")
 }

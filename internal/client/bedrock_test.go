@@ -171,6 +171,8 @@ func TestIsAnthropicModel(t *testing.T) {
 	}{
 		{"anthropic.claude-haiku-4-5-20251001-v1:0", true},
 		{"anthropic.claude-sonnet-4-6-20250514-v1:0", true},
+		{"us.anthropic.claude-3-5-sonnet-20241022-v2:0", true},
+		{"eu.anthropic.claude-3-5-haiku-20241022-v1:0", true},
 		{"amazon.titan-text-express-v1", false},
 		{"meta.llama3-70b-instruct-v1:0", false},
 		{"mistral.mistral-7b-instruct-v0:2", false},
