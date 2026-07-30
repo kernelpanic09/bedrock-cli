@@ -32,6 +32,7 @@ All config keys can be overridden via env vars using the `BEDROCK_CLI_` prefix:
 | `BEDROCK_CLI_REGION`          | `region`        |
 | `BEDROCK_CLI_MAX_TOKENS`      | `max-tokens`    |
 | `BEDROCK_CLI_TEMPERATURE`     | `temperature`   |
+| `BEDROCK_CLI_CACHE_TTL`       | `cache-ttl`     |
 | `BEDROCK_CLI_NO_STREAM`       | `no-stream`     |
 | `BEDROCK_CLI_NO_COLOR`        | `no-color`      |
 | `BEDROCK_CLI_SHOW_COST`       | `show-cost`     |
