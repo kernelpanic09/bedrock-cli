@@ -25,8 +25,8 @@ func consumeConverseStream(stream *bedrockruntime.ConverseStreamOutput, onToken 
 			}
 		case *brtypes.ConverseStreamOutputMemberMetadata:
 			if v.Value.Usage != nil {
-				result.InputTokens = int(aws_int32(v.Value.Usage.InputTokens))
-				result.OutputTokens = int(aws_int32(v.Value.Usage.OutputTokens))
+				result.InputTokens = int(derefInt32(v.Value.Usage.InputTokens))
+				result.OutputTokens = int(derefInt32(v.Value.Usage.OutputTokens))
 			}
 		}
 	}
@@ -157,8 +157,8 @@ func parseStreamChunk(modelID string, data []byte) (*parsedChunk, error) {
 	return chunk, nil
 }
 
-// aws_int32 safely dereferences an *int32 pointer.
-func aws_int32(p *int32) int32 {
+// derefInt32 safely dereferences an *int32 pointer.
+func derefInt32(p *int32) int32 {
 	if p == nil {
 		return 0
 	}
