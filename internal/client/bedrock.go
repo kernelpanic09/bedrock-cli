@@ -105,8 +105,9 @@ func (c *Client) invokeConverseStream(ctx context.Context, modelID, prompt strin
 	return consumeConverseStream(stream, onToken)
 }
 
-// invokeModelStream uses InvokeModelWithResponseStream for models that don't
-// support the Converse API (e.g. older Titan, Cohere).
+// invokeModelStream uses InvokeModelWithResponseStream for non-Anthropic models.
+// This includes models that support Converse (e.g. Llama 3, Mistral) — the CLI
+// only routes Anthropic IDs to ConverseStream; all others stay on this path.
 func (c *Client) invokeModelStream(ctx context.Context, modelID, prompt string, temperature float64, maxTokens int, onToken func(string)) (*InvokeResult, error) {
 	body, err := buildRequestBody(modelID, prompt, temperature, maxTokens)
 	if err != nil {
