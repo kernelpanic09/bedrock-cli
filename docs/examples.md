@@ -68,6 +68,15 @@ bedrock-cli cost summary --since 7d
 # Which models are costing the most?
 bedrock-cli cost by-model --since 30d
 
+# Tag a prompt to a project for attribution
+bedrock-cli prompt --project my-app "Explain this error"
+
+# Break down spending by project tag
+bedrock-cli cost by-project --since 30d
+
+# Break down spending by AWS account (useful across multiple accounts)
+bedrock-cli cost by-account --since 7d
+
 # Export for analysis
 bedrock-cli cost summary --json > usage.json
 ```
