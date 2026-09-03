@@ -23,8 +23,8 @@ type Entry struct {
 }
 
 // Key computes the SHA256 cache key for a given combination of inputs.
-// All parameters are normalized (trimmed, lowercased where appropriate) so that
-// minor formatting differences don't bust the cache.
+// The prompt is trimmed of leading/trailing whitespace so minor formatting
+// differences don't bust the cache; all other parameters are used as-is.
 func Key(model, prompt string, temperature float64, maxTokens int) string {
 	// Normalize the prompt so trailing whitespace differences don't matter.
 	normalized := strings.TrimSpace(prompt)
