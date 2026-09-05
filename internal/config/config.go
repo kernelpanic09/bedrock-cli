@@ -15,14 +15,21 @@ const (
 
 // Config holds all user-facing configuration values.
 type Config struct {
-	DefaultModel string  `mapstructure:"default-model"`
-	Region       string  `mapstructure:"region"`
-	MaxTokens    int     `mapstructure:"max-tokens"`
-	Temperature  float64 `mapstructure:"temperature"`
-	// CacheTTL of 0 means cache forever; -1 disables caching entirely.
-	CacheTTL int  `mapstructure:"cache-ttl"`
-	NoColor  bool `mapstructure:"no-color"`
+	// DefaultModel is the model alias used when none is specified (e.g. "sonnet").
+	DefaultModel string `mapstructure:"default-model"`
+	// Region is the AWS region for Bedrock API calls.
+	Region string `mapstructure:"region"`
+	// MaxTokens caps the number of tokens the model may return per response.
+	MaxTokens int `mapstructure:"max-tokens"`
+	// Temperature controls sampling randomness (0.0 = deterministic, 1.0 = maximum).
+	Temperature float64 `mapstructure:"temperature"`
+	// CacheTTL is the response cache lifetime in seconds; 0 = cache forever, -1 = disabled.
+	CacheTTL int `mapstructure:"cache-ttl"`
+	// NoColor suppresses ANSI color codes in terminal output.
+	NoColor bool `mapstructure:"no-color"`
+	// NoStream buffers the full response before printing instead of streaming tokens.
 	NoStream bool `mapstructure:"no-stream"`
+	// ShowCost prints the estimated invocation cost after each response.
 	ShowCost bool `mapstructure:"show-cost"`
 }
 
