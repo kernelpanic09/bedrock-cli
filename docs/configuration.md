@@ -55,7 +55,9 @@ aws configure
 export AWS_PROFILE=my-sandbox-account
 ```
 
-The IAM principal needs these Bedrock permissions at minimum:
+The required IAM permissions depend on which commands you use.
+
+**Core (prompt, compare, models)**
 
 ```json
 {
@@ -72,15 +74,58 @@ The IAM principal needs these Bedrock permissions at minimum:
 }
 ```
 
-For Knowledge Base queries, also add:
+**Guardrails (guardrails list/describe/check)**
 
 ```json
 {
   "Effect": "Allow",
   "Action": [
-    "bedrock-agent-runtime:Retrieve"
+    "bedrock:ListGuardrails",
+    "bedrock:GetGuardrail",
+    "bedrock:ApplyGuardrail"
   ],
-  "Resource": "arn:aws:bedrock:<region>:<account>:knowledge-base/*"
+  "Resource": "*"
+}
+```
+
+**Agents (agents list/describe/invoke)**
+
+```json
+{
+  "Effect": "Allow",
+  "Action": [
+    "bedrock-agent:ListAgents",
+    "bedrock-agent:GetAgent",
+    "bedrock-agent:ListAgentActionGroups",
+    "bedrock-agent:ListAgentKnowledgeBases",
+    "bedrock-agent-runtime:InvokeAgent"
+  ],
+  "Resource": "*"
+}
+```
+
+**Knowledge Bases (kb list/describe/query/create/sync)**
+
+```json
+{
+  "Effect": "Allow",
+  "Action": [
+    "bedrock-agent:ListKnowledgeBases",
+    "bedrock-agent:GetKnowledgeBase",
+    "bedrock-agent:CreateKnowledgeBase",
+    "bedrock-agent:DeleteKnowledgeBase",
+    "bedrock-agent:ListDataSources",
+    "bedrock-agent:GetDataSource",
+    "bedrock-agent:CreateDataSource",
+    "bedrock-agent:DeleteDataSource",
+    "bedrock-agent:StartIngestionJob",
+    "bedrock-agent:ListIngestionJobs",
+    "bedrock-agent-runtime:Retrieve",
+    "s3:GetObject",
+    "s3:PutObject",
+    "s3:ListBucket"
+  ],
+  "Resource": "*"
 }
 ```
 
