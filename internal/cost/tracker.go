@@ -275,7 +275,8 @@ func scanInvocations(rows *sql.Rows) ([]Invocation, error) {
 	return results, rows.Err()
 }
 
-// ByProject returns per-project aggregated stats.
+// ByProject returns per-project aggregated stats. Invocations with no project
+// tag have an empty string as the Project key in the returned slice.
 func (t *Tracker) ByProject(since time.Time) ([]ProjectSummary, error) {
 	query := `
 		SELECT
@@ -309,7 +310,8 @@ func (t *Tracker) ByProject(since time.Time) ([]ProjectSummary, error) {
 	return results, rows.Err()
 }
 
-// ByAccount returns per-account aggregated stats.
+// ByAccount returns per-account aggregated stats. Invocations where the AWS
+// account ID was not captured appear with AccountID set to "unknown".
 func (t *Tracker) ByAccount(since time.Time) ([]AccountSummary, error) {
 	query := `
 		SELECT
