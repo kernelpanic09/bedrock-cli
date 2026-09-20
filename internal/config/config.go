@@ -23,7 +23,7 @@ type Config struct {
 	MaxTokens int `mapstructure:"max-tokens"`
 	// Temperature controls sampling randomness (0.0 = deterministic, 1.0 = maximum).
 	Temperature float64 `mapstructure:"temperature"`
-	// CacheTTL is the response cache lifetime in seconds; 0 = cache forever, -1 = disabled.
+	// CacheTTL is the response cache lifetime in hours; 0 = cache forever, -1 = disabled.
 	CacheTTL int `mapstructure:"cache-ttl"`
 	// NoColor suppresses ANSI color codes in terminal output.
 	NoColor bool `mapstructure:"no-color"`
