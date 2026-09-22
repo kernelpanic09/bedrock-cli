@@ -170,7 +170,8 @@ func (c *Client) GetFoundationModel(ctx context.Context, modelID string) (*Found
 	return detail, nil
 }
 
-// ListKnowledgeBases returns all knowledge bases in the account/region via the agent runtime.
+// ListKnowledgeBases is unimplemented: listing KBs requires the bedrock-agent
+// control plane, not the runtime client. It always returns an error with CLI guidance.
 func (c *Client) ListKnowledgeBases(ctx context.Context) ([]KnowledgeBase, error) {
 	// The agent client uses a different service endpoint than the runtime.
 	// We delegate to a wrapper to keep this file manageable.

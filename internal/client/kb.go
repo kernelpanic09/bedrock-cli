@@ -9,7 +9,8 @@ import (
 	arttypes "github.com/aws/aws-sdk-go-v2/service/bedrockagentruntime/types"
 )
 
-// listKnowledgeBases returns all knowledge bases visible to the current credentials.
+// listKnowledgeBases is a stub; listing requires the bedrock-agent control plane
+// client (not the runtime). It always returns an error directing callers to the AWS CLI.
 func listKnowledgeBases(ctx context.Context, client *bedrockagentruntime.Client) ([]KnowledgeBase, error) {
 	// The agent runtime doesn't expose a ListKnowledgeBases API directly;
 	// that lives in the bedrock-agent control plane. We use the bedrock agent
