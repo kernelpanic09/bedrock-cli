@@ -10,7 +10,7 @@ The tap will be published at `github.com/kernelpanic09/homebrew-tap` once the fi
 
 ## go install
 
-If you have Go 1.22+ installed:
+If you have Go 1.24+ installed (see `go.mod` for the exact toolchain version):
 
 ```sh
 go install github.com/kernelpanic09/bedrock-cli/cmd/bedrock-cli@latest
