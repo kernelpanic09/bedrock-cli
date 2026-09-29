@@ -3,6 +3,7 @@ package template
 import (
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -110,6 +111,23 @@ func TestRenderCustomDefault(t *testing.T) {
 	}
 	if result == "" {
 		t.Error("Render() returned empty string")
+	}
+}
+
+func TestRenderUndefinedVariable(t *testing.T) {
+	// Body references a variable that isn't declared in the frontmatter at all,
+	// so it's never added to vars and trips the "missingkey=error" template option.
+	tmpl, err := parse("test", "Explain {{.Undeclared}} please.\n")
+	if err != nil {
+		t.Fatalf("parse() error: %v", err)
+	}
+
+	_, err = Render(tmpl, map[string]string{})
+	if err == nil {
+		t.Fatal("Render() should error on a template referencing an undefined variable")
+	}
+	if !strings.Contains(err.Error(), "undefined variable") {
+		t.Errorf("Render() error = %q, want it to mention an undefined variable", err.Error())
 	}
 }
 
