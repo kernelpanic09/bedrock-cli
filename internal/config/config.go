@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/spf13/viper"
 )
@@ -96,8 +97,10 @@ func Load() (*Config, error) {
 	}
 	viper.AddConfigPath(dir)
 
-	// Env var overrides - BEDROCK_CLI_DEFAULT_MODEL etc.
+	// Env var overrides - BEDROCK_CLI_DEFAULT_MODEL etc. Hyphens in config
+	// keys map to underscores in the variable name.
 	viper.SetEnvPrefix("BEDROCK_CLI")
+	viper.SetEnvKeyReplacer(strings.NewReplacer("-", "_"))
 	viper.AutomaticEnv()
 
 	setDefaults()

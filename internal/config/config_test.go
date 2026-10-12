@@ -39,6 +39,23 @@ func TestEnvOverride(t *testing.T) {
 	os.Unsetenv("BEDROCK_CLI_REGION")
 }
 
+func TestEnvOverrideHyphenatedKey(t *testing.T) {
+	t.Setenv("HOME", t.TempDir())
+	t.Setenv("BEDROCK_CLI_DEFAULT_MODEL", "haiku")
+	t.Setenv("BEDROCK_CLI_MAX_TOKENS", "123")
+
+	cfg, err := Load()
+	if err != nil {
+		t.Fatalf("Load() returned unexpected error: %v", err)
+	}
+	if cfg.DefaultModel != "haiku" {
+		t.Errorf("DefaultModel = %q, want %q via env override", cfg.DefaultModel, "haiku")
+	}
+	if cfg.MaxTokens != 123 {
+		t.Errorf("MaxTokens = %d, want 123 via env override", cfg.MaxTokens)
+	}
+}
+
 func TestDir(t *testing.T) {
 	tmp := t.TempDir()
 	t.Setenv("HOME", tmp)
