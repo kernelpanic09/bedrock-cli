@@ -297,7 +297,7 @@ region        = "us-east-1"
 aws-profile   = ""       # empty = default credential chain
 max-tokens    = 4096
 temperature   = 0.7
-cache-ttl     = 0       # 0 = cache forever; -1 = disable
+cache-ttl     = 0       # hours; 0 = cache forever; -1 = disable
 show-cost     = true
 no-stream     = false
 no-color      = false
